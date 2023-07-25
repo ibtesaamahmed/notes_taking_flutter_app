@@ -20,7 +20,7 @@ class _AddNewNoteScreenState extends State<AddNewNoteScreen> {
         context: context,
         builder: (ctx) => AlertDialog(
               title: Text(
-                'An Error Occured',
+                'An Error Occured!',
                 style: TextStyle(color: Theme.of(context).primaryColor),
               ),
               content: Text(
