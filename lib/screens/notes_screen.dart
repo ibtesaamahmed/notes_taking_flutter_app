@@ -10,6 +10,8 @@ import 'package:intl/intl.dart';
 class NotesScreen extends StatefulWidget {
   static const routeName = 'notes_screen';
 
+  const NotesScreen({super.key});
+
   @override
   State<NotesScreen> createState() => _NotesScreenState();
 }
@@ -28,8 +30,7 @@ class _NotesScreenState extends State<NotesScreen> {
   @override
   Widget build(BuildContext context) {
     final scaffold = ScaffoldMessenger.of(context);
-    print('building');
-    // final _notesData = Provider.of<Notes>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Notes'),
@@ -48,82 +49,80 @@ class _NotesScreenState extends State<NotesScreen> {
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : Container(
-                child: RefreshIndicator(
-                  onRefresh: () => _refreshNotes(),
-                  color: Theme.of(context).primaryColor,
-                  child: Consumer<Notes>(
-                    builder: (context, value, child) => value.notes.isEmpty
-                        ? const Center(
-                            child: Text('No Notes Added Yet'),
-                          )
-                        : ListView.builder(
-                            itemBuilder: (context, index) => Card(
-                              elevation: 5,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        NotesDetailScreen(index),
-                                  ));
-                                },
-                                child: ListTile(
-                                  title: Text(value.notes[index].title),
-                                  subtitle: Text(DateFormat.yMMMEd()
-                                      .format(value.notes[index].dateTime!)),
-                                  trailing: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        IconButton(
-                                            onPressed: () {
-                                              Navigator.of(context)
-                                                  .push(MaterialPageRoute(
-                                                builder: (context) =>
-                                                    EditNotesScreen(index,
-                                                        value.notes[index].id),
-                                              ));
-                                            },
-                                            icon: Icon(
-                                              Icons.edit,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                            )),
-                                        IconButton(
-                                            onPressed: () async {
-                                              try {
-                                                await value.deleteNote(
-                                                    value.notes[index].id);
-                                                Fluttertoast.showToast(
-                                                    gravity:
-                                                        ToastGravity.BOTTOM,
-                                                    msg: 'Deleted Successfully',
-                                                    toastLength:
-                                                        Toast.LENGTH_LONG,
-                                                    backgroundColor:
-                                                        Colors.black45,
-                                                    textColor: Theme.of(context)
-                                                        .primaryColor);
-                                              } catch (error) {
-                                                scaffold.showSnackBar(
-                                                    const SnackBar(
-                                                        content: Text(
-                                                  'Deletion Failed! Try again.',
-                                                  textAlign: TextAlign.center,
-                                                )));
-                                              }
-                                            },
-                                            icon: Icon(
-                                              Icons.delete,
-                                              color:
-                                                  Theme.of(context).errorColor,
-                                            )),
-                                      ]),
-                                ),
+            : RefreshIndicator(
+                onRefresh: () => _refreshNotes(),
+                color: Theme.of(context).primaryColor,
+                child: Consumer<Notes>(
+                  builder: (context, value, child) => value.notes.isEmpty
+                      ? const Center(
+                          child: Text('No Notes Added Yet'),
+                        )
+                      : ListView.builder(
+                          itemBuilder: (context, index) => Card(
+                            elevation: 5,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      NotesDetailScreen(index),
+                                ));
+                              },
+                              child: ListTile(
+                                title: Text(value.notes[index].title),
+                                subtitle: Text(DateFormat.yMMMEd()
+                                    .format(value.notes[index].dateTime!)),
+                                trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      IconButton(
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .push(MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditNotesScreen(index,
+                                                      value.notes[index].id),
+                                            ));
+                                          },
+                                          icon: Icon(
+                                            Icons.edit,
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                          )),
+                                      IconButton(
+                                          onPressed: () async {
+                                            try {
+                                              await value.deleteNote(
+                                                  value.notes[index].id);
+                                              Fluttertoast.showToast(
+                                                  gravity: ToastGravity.BOTTOM,
+                                                  msg: 'Deleted Successfully',
+                                                  toastLength:
+                                                      Toast.LENGTH_LONG,
+                                                  backgroundColor:
+                                                      Colors.black45,
+                                                  textColor: Theme.of(context)
+                                                      .primaryColor);
+                                            } catch (error) {
+                                              scaffold
+                                                  .showSnackBar(const SnackBar(
+                                                      content: Text(
+                                                'Deletion Failed! Try again.',
+                                                textAlign: TextAlign.center,
+                                              )));
+                                            }
+                                          },
+                                          icon: Icon(
+                                            Icons.delete,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .error,
+                                          )),
+                                    ]),
                               ),
                             ),
-                            itemCount: value.notes.length,
                           ),
-                  ),
+                          itemCount: value.notes.length,
+                        ),
                 ),
               ),
       ),

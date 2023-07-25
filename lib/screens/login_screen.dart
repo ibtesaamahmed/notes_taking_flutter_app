@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import './signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -44,12 +46,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: const Text('Login')),
+        title: const Center(child: Text('Login')),
         foregroundColor: Colors.white,
       ),
       body: Container(
         height: double.infinity,
-        color: Color.fromRGBO(206, 206, 206, 1),
+        color: const Color.fromRGBO(206, 206, 206, 1),
         padding: const EdgeInsets.all(30),
         child: SingleChildScrollView(
           child: Column(
@@ -107,7 +109,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 backgroundColor: Colors.black45,
                                 textColor: Theme.of(context).primaryColor);
                           } on HttpException catch (error) {
-                            print(error);
                             var errorMessage = 'Authentication failed!';
                             if (error.toString().contains('INVALID_EMAIL')) {
                               errorMessage = 'This email is invalid';

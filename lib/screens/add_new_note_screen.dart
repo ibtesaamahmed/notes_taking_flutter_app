@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 class AddNewNoteScreen extends StatefulWidget {
   static const routeName = 'add_notes';
 
+  const AddNewNoteScreen({super.key});
+
   @override
   State<AddNewNoteScreen> createState() => _AddNewNoteScreenState();
 }
@@ -57,7 +59,7 @@ class _AddNewNoteScreenState extends State<AddNewNoteScreen> {
           dateTime: DateTime.now()));
       Navigator.of(context).pop();
     } catch (error) {
-      throw error;
+      rethrow;
     }
     setState(() {
       _isLoading = false;
@@ -134,31 +136,6 @@ class _AddNewNoteScreenState extends State<AddNewNoteScreen> {
                     ),
                   ],
                 ),
-              )
-                // Padding(
-                //   padding: const EdgeInsets.all(8),
-                //   child: Column(
-                //     children: <Widget>[
-                //       TextField(
-                //         controller: _titleController,
-                //         autofocus: true,
-                //         decoration: const InputDecoration(
-                //           label: Text('Title'),
-                //           border: OutlineInputBorder(),
-                //         ),
-                //       ),
-                //       const SizedBox(height: 10),
-                //       TextField(
-                //         maxLength: 300,
-                //         maxLines: 28,
-                //         controller: _descriptionController,
-                //         decoration: const InputDecoration(
-                //             label: Text('Description'),
-                //             border: OutlineInputBorder()),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                ));
+              )));
   }
 }

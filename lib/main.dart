@@ -13,7 +13,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  MaterialColor myColor = MaterialColor(
+  final MaterialColor myColor = MaterialColor(
     const Color.fromRGBO(255, 160, 0, 1).value,
     const <int, Color>{
       50: Color.fromRGBO(255, 160, 0, 0.1),
@@ -28,6 +28,8 @@ class MyApp extends StatelessWidget {
       900: Color.fromRGBO(255, 160, 0, 1),
     },
   );
+
+  MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -38,8 +40,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, Notes>(
           create: (context) => Notes('', '', []),
           update: (context, auth, previousNotes) => Notes(
-            auth.token,
-            auth.userId,
+            auth.token!,
+            auth.userId!,
             previousNotes == null ? [] : previousNotes.notes,
           ),
         ),
@@ -52,10 +54,10 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/',
         routes: {
-          '/': (context) => LoginScreen(),
-          SignupScreen.routeName: (context) => SignupScreen(),
-          NotesScreen.routeName: (context) => NotesScreen(),
-          AddNewNoteScreen.routeName: (context) => AddNewNoteScreen(),
+          '/': (context) => const LoginScreen(),
+          SignupScreen.routeName: (context) => const SignupScreen(),
+          NotesScreen.routeName: (context) => const NotesScreen(),
+          AddNewNoteScreen.routeName: (context) => const AddNewNoteScreen(),
         },
       ),
     );

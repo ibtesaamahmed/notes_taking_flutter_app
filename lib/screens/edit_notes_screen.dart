@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 class EditNotesScreen extends StatefulWidget {
   final int existingIndex;
   final String existingId;
-  EditNotesScreen(this.existingIndex, this.existingId);
+  const EditNotesScreen(this.existingIndex, this.existingId, {super.key});
   @override
   State<EditNotesScreen> createState() => _EditNotesScreenState();
 }
@@ -18,10 +18,10 @@ class _EditNotesScreenState extends State<EditNotesScreen> {
   }
 
   Future<void> _getText() async {
-    final _notesData = Provider.of<Notes>(context, listen: false);
-    _titleController.text = _notesData.notes[widget.existingIndex].title;
+    final notesSData = Provider.of<Notes>(context, listen: false);
+    _titleController.text = notesSData.notes[widget.existingIndex].title;
     _descriptionController.text =
-        _notesData.notes[widget.existingIndex].description;
+        notesSData.notes[widget.existingIndex].description;
   }
 
   void _showErrorDialog(String message) {
@@ -55,14 +55,14 @@ class _EditNotesScreenState extends State<EditNotesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _noteData = Provider.of<Notes>(context, listen: false);
+    final notesData = Provider.of<Notes>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Note'),
         actions: [
           IconButton(
               onPressed: () async {
-                final newNote;
+                final Note newNote;
                 if (_titleController.text.isEmpty ||
                     _descriptionController.text.isEmpty) {
                   _showErrorDialog('Empty Fields');
@@ -72,11 +72,11 @@ class _EditNotesScreenState extends State<EditNotesScreen> {
                     _isLoading = true;
                   });
                   newNote = Note(
-                      id: _noteData.notes[widget.existingIndex].id,
+                      id: notesData.notes[widget.existingIndex].id,
                       title: _titleController.text,
                       description: _descriptionController.text,
                       dateTime: DateTime.now());
-                  await _noteData.updateNotes(newNote, widget.existingId);
+                  await notesData.updateNotes(newNote, widget.existingId);
                 }
                 setState(() {
                   _isLoading = false;
@@ -146,31 +146,7 @@ class _EditNotesScreenState extends State<EditNotesScreen> {
                   ),
                 ],
               ),
-            )
-              //  Padding(
-              //   padding: const EdgeInsets.all(8),
-              //   child: Column(
-              //     children: <Widget>[
-              //       TextField(
-              //         controller: _titleController,
-              //         autofocus: true,
-              //         decoration: const InputDecoration(
-              //           label: Text('Title'),
-              //           border: OutlineInputBorder(),
-              //         ),
-              //       ),
-              //       const SizedBox(height: 10),
-              //       TextFormField(
-              //         controller: _descriptionController,
-              //         maxLines: 28,
-              //         decoration: const InputDecoration(
-              //             label: Text('Description'),
-              //             border: OutlineInputBorder()),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              ),
+            )),
     );
   }
 }

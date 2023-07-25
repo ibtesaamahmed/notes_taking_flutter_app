@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:notes_app/config/app_config.dart';
+import 'package:notes_app/config/constants.dart';
 
 class Note {
   String id;
@@ -17,8 +17,8 @@ class Note {
 }
 
 class Notes with ChangeNotifier {
-  final authToken;
-  final userId;
+  final String authToken;
+  final String userId;
   Notes(this.authToken, this.userId, this._notes);
   List<Note> _notes = [];
 
@@ -44,7 +44,7 @@ class Notes with ChangeNotifier {
       _notes.add(newNote);
       notifyListeners();
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 

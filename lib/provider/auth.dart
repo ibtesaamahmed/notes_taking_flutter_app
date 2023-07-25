@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../models/http_exception.dart';
-import 'package:notes_app/config/app_config.dart';
+import 'package:notes_app/config/constants.dart';
 
 class Auth with ChangeNotifier {
   String? _token;
@@ -55,7 +55,7 @@ class Auth with ChangeNotifier {
         ),
       );
     } catch (error) {
-      throw error;
+      rethrow;
     }
     notifyListeners();
   }
@@ -83,7 +83,7 @@ class Auth with ChangeNotifier {
         ),
       );
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 }

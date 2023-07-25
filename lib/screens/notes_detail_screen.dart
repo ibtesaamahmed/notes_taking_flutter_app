@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 class NotesDetailScreen extends StatelessWidget {
   final int existingIndex;
-  NotesDetailScreen(this.existingIndex);
+  const NotesDetailScreen(this.existingIndex, {super.key});
   @override
   Widget build(BuildContext context) {
     final noteData = Provider.of<Notes>(context);
@@ -13,7 +13,7 @@ class NotesDetailScreen extends StatelessWidget {
       appBar: AppBar(title: Text(noteData.notes[existingIndex].title)),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Container(
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
@@ -22,7 +22,7 @@ class NotesDetailScreen extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             child: Card(
               child: Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Column(children: [
                     Text(
                       DateFormat.yMMMEd()
